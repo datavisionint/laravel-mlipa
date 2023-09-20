@@ -18,6 +18,7 @@ class PushUssdCollection implements ApiAction
         public ?string $nonce = null,
         public string $currency = 'TZS'
     ) {
+        $this->reference = $reference ?? generateReference();
     }
 
     public function initiate()
