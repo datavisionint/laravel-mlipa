@@ -17,21 +17,21 @@ return [
      *
      * The route exposed in your application that will be used to receive webhooks
      */
-    'webhook_route' => 'integrations/mlipa/webhook',
+    'webhook_route' => 'mlipa/webhook',
 
     /**
      * Webhook route name
      *
      * The route name used for webhook when using route() method
      */
-    'webhook_route_name' => 'integrations.mlipa.webhook',
+    'webhook_route_name' => 'mlipa.webhook',
 
     /**
      * Payout route
      *
      * The route exposed in your application that will be used to verify payouts
      */
-    'payout_verification_route' => 'integrations/mlipa/payouts/verification',
+    'payout_verification_route' => 'mlipa/payouts/verification',
 
     /**
      * When set to false errors will be thrown when they occur and you will have to
@@ -46,7 +46,7 @@ return [
      *
      * The route name used for payout verification when using route() method
      */
-    'payout_verification_route_name' => 'integrations.mlipa.payouts.verification',
+    'payout_verification_route_name' => 'mlipa.payouts.verification',
 
     /**
      * The root URL of the M-lipa requests
