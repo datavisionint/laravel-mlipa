@@ -4,21 +4,14 @@ namespace DatavisionInt\Mlipa;
 
 class MlipaWebhookEventData
 {
-    public string $reference;
-
-    public string $msisdn;
-
-    public string $amount;
-
-    public string $mkey;
-
-    public string $receipt;
-
-    public string $status;
-
-    public string $error_message;
-
-    public string $event;
+    public ?string $reference;
+    public ?string $msisdn;
+    public ?string $amount;
+    public ?string $mkey;
+    public ?string $receipt;
+    public ?string $status;
+    public ?string $error_message;
+    public ?string $event;
 
     /**
      * Create class instance from array

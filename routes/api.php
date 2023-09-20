@@ -8,8 +8,7 @@ use Illuminate\Support\Facades\Route;
 Route::post(
     config('mlipa.webhook_route'),
     [MlipaController::class, 'processWebhook']
-)->name(config('mlipa.webhook_route_name'))
-->middleware(MlipaWebhookLoggingMiddleware::class);
+)->name(config('mlipa.webhook_route_name'));
 
 Route::any(
     config('mlipa.payout_verification_route'),
