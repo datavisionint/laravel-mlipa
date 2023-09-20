@@ -17,23 +17,18 @@ class MlipaWebhookManager
     public function fireEvent(array $data)
     {
         $mlipaWebhookEventData = MlipaWebhookEventData::fromArray($data);
-        $event = $this->getEvent($mlipaWebhookEventData->event);
-        if($event){
-            event(new $event(
-                $mlipaWebhookEventData
-            ));
-        }
+        $this->dispatchEvent($mlipaWebhookEventData);
     }
 
-    private function getEvent(string $event)
+    private function dispatchEvent(MlipaWebhookEventData $mlipaWebhookEventData)
     {
-        return match ($event) {
-            "billing_success" => BillingSuccess::class,
-            "billing_failed" => BillingFailed::class,
-            "payout_success" => PayoutSuccess::class,
-            "payout_success" => PayoutFailed::class,
-            "pushussd_success" => PushUssdSuccess::class,
-            "pushussd_failed" => PushUssdFailed::class,
+        match ($mlipaWebhookEventData->event) {
+            "billing_success" => BillingSuccess::dispatch($mlipaWebhookEventData),
+            "billing_failed" => BillingFailed::dispatch($mlipaWebhookEventData),
+            "payout_success" => PayoutSuccess::dispatch($mlipaWebhookEventData),
+            "payout_success" => PayoutFailed::dispatch($mlipaWebhookEventData),
+            "pushussd_success" => PushUssdSuccess::dispatch($mlipaWebhookEventData),
+            "pushussd_failed" => PushUssdFailed::dispatch($mlipaWebhookEventData),
             null => null
         };
     }
