@@ -42,6 +42,12 @@ return [
     'handle_errors' => false,
 
     /**
+     * When set to true, the transactions will be logged to database, and you will be
+     * required to create the table by running the migration
+     */
+    'log_mlipa_requests' => true,
+
+    /**
      * Payout route name
      *
      * The route name used for payout verification when using route() method

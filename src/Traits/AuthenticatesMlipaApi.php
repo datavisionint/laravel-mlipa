@@ -37,14 +37,14 @@ trait AuthenticatesMlipaApi
         );
 
         $tokenResponse = $this->post(
-            $rootUrl . $authenticationEndpoint,
-            [
+            url: $rootUrl . $authenticationEndpoint,
+            data: [
                 'grant_type' => 'client_credentials',
                 'client_id' => $clientKey,
                 'client_secret' => $clientSecret,
                 'scope' => '*',
             ],
-            $defaultHeaders
+            headers: $defaultHeaders
         );
 
         throw_if(

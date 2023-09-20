@@ -4,15 +4,30 @@ namespace DatavisionInt\Mlipa\Traits;
 
 use DatavisionInt\Mlipa\Exceptions\AuthenticationException;
 use DatavisionInt\Mlipa\Exceptions\MissingConfigurationException;
+use DatavisionInt\Mlipa\Models\MlipaRequestLog;
 use Illuminate\Support\Facades\Http;
 
 trait InteractsWithMlipaApi
 {
-    private function post($url, $data, $headers = [])
+    private function post($url, $data, $token = null, $headers = [])
     {
         $response = Http::withHeaders($headers)
-            ->post($url, $data)
-            ->json();
+            ->post($url, $data);
+        $jsonResponse = $response->json();
+
+        if (config("mlipa.log_mlipa_requests")) {
+            MlipaRequestLog::create([
+                'reference' => $data["reference"],
+                'url' => $url,
+                'method' => "POST",
+                'headers' => $headers,
+                'token' => $token,
+                'body' => $data,
+                'response_status' => $response->status(),
+                'response' => $jsonResponse,
+                'other_details' => null
+            ]);
+        }
         return $response;
     }
 

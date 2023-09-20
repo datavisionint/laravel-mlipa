@@ -8,8 +8,8 @@ use DatavisionInt\Mlipa\Traits\InteractsWithMlipaApi;
 
 class PushUssdCollection implements ApiAction
 {
-    use InteractsWithMlipaApi;
-    use AuthenticatesMlipaApi;
+    use InteractsWithMlipaApi,
+        AuthenticatesMlipaApi;
 
     public function __construct(
         public float $amount,
