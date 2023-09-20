@@ -19,10 +19,25 @@ class PushUssdCollection implements ApiAction
         public string $currency = 'TZS'
     ) {
         $this->reference = $reference ?? generateReference();
+        $this->nonce = $nonce ?? generateNonce();
     }
 
     public function initiate()
     {
         $token = $this->getToken();
+        $pushUssdEndpoint = $this->getConfigValue(
+            'mlipa.endpoints.pushussd',
+            'The pushussd URL is not set, or is improperly set, publish mlipa config then update value accordingly!'
+        );
+        $body = [
+            'amount' => $this->amount,
+            'msisdn' => $this->msisdn,
+            'reference' => $this->reference,
+            'nonce' => $this->nonce,
+            'currency' => $this->currency,
+        ];
+
+        $pushUssdResponse = $this->post($pushUssdEndpoint, $body, $token);
+        dump($pushUssdResponse);
     }
 }

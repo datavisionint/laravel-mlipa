@@ -21,30 +21,19 @@ trait AuthenticatesMlipaApi
 
         );
 
-        $rootUrl = $this->getConfigValue(
-            'mlipa.root_url',
-            'The root URL is not set, or is improperly set, publish mlipa config then update value accordingly!'
-        );
-
         $authenticationEndpoint = $this->getConfigValue(
             'mlipa.endpoints.authentication',
             'The authentication URL is not set, or is improperly set, publish mlipa config then update value accordingly!'
         );
 
-        $defaultHeaders = $this->getConfigValue(
-            'mlipa.default_headers',
-            'The default headers are not set, or are improperly set, publish mlipa config then update value accordingly!'
-        );
-
         $tokenResponse = $this->post(
-            url: $rootUrl . $authenticationEndpoint,
+            url: $authenticationEndpoint,
             data: [
                 'grant_type' => 'client_credentials',
                 'client_id' => $clientKey,
                 'client_secret' => $clientSecret,
                 'scope' => '*',
             ],
-            headers: $defaultHeaders
         );
 
         throw_if(

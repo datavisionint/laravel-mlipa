@@ -16,3 +16,10 @@ if (!function_exists("generateReference")) {
         return round(microtime(true) * 1000) - 1695100000000;
     }
 }
+
+if (!function_exists("generateNonce")) {
+    function generateNonce(): int
+    {
+        return str()->ulid()->toBase58();
+    }
+}

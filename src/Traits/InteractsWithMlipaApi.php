@@ -11,8 +11,21 @@ trait InteractsWithMlipaApi
 {
     private function post($url, $data, $token = null, $headers = [])
     {
-        $response = Http::withHeaders($headers)
-            ->post($url, $data);
+
+        $defaultHeaders = $this->getConfigValue(
+            'mlipa.default_headers',
+            'The default headers are not set, or are improperly set, publish mlipa config then update value accordingly!',
+            []
+        );
+
+        $rootUrl = $this->getConfigValue(
+            'mlipa.root_url',
+            'The root URL is not set, or is improperly set, publish mlipa config then update value accordingly!'
+        );
+
+        $response = Http::withHeaders(array_merge($headers, $defaultHeaders))
+            ->withToken($token)
+            ->post($rootUrl . $url, $data);
         $jsonResponse = $response->json();
 
         if (config("mlipa.log_mlipa_requests")) {
@@ -31,10 +44,18 @@ trait InteractsWithMlipaApi
         return $response;
     }
 
-    private function getConfigValue($key, $errorMessage)
+    /**
+     * Get configuration value with option to throw an error
+     *
+     * @param string $key
+     * @param string $errorMessage
+     * @throws MissingConfigurationException
+     * @return void
+     */
+    private function getConfigValue($key, $errorMessage, $default = null)
     {
         throw_unless(
-            $value = config($key),
+            $value = config($key, $default),
             new MissingConfigurationException($errorMessage)
         );
 
