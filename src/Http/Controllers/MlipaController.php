@@ -10,7 +10,7 @@ class MlipaController extends Controller
     {
         return [
             "success" => true,
-            "message" => "Webhook process"
+            "message" => "Webhook processed"
         ];
     }
 
