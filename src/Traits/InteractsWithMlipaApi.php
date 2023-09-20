@@ -3,6 +3,7 @@
 namespace DatavisionInt\Mlipa\Traits;
 
 use DatavisionInt\Mlipa\Exceptions\AuthenticationException;
+use DatavisionInt\Mlipa\Exceptions\IpAuthenticationException;
 use DatavisionInt\Mlipa\Exceptions\MissingConfigurationException;
 use DatavisionInt\Mlipa\Exceptions\WebhookUrlNotSetException;
 use DatavisionInt\Mlipa\Models\MlipaRequestLog;
@@ -56,6 +57,10 @@ trait InteractsWithMlipaApi
         throw_if(
             $data->message == "Webhook URL is not set, check the webhook documentation section in the documentation for instructions, or go to configuration directly and set the webhook",
             new WebhookUrlNotSetException($data->message)
+        );
+        throw_if(
+            str()->of($data->message)->startsWith("The IP"),
+            new IpAuthenticationException($data->message)
         );
     }
 
