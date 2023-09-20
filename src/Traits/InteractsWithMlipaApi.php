@@ -25,10 +25,11 @@ trait InteractsWithMlipaApi
             'mlipa.root_url',
             'The root URL is not set, or is improperly set, publish mlipa config then update value accordingly!'
         );
-
-        $response = Http::withHeaders(array_merge($headers, $defaultHeaders))
+        $headers = array_merge($headers, $defaultHeaders);
+        $url = $rootUrl . $url;
+        $response = Http::withHeaders($headers)
             ->withToken($token)
-            ->post($rootUrl . $url, $data);
+            ->post($url, $data);
 
         $jsonResponse = $response->json();
 
