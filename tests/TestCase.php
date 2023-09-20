@@ -2,9 +2,9 @@
 
 namespace DatavisionInt\Mlipa\Tests;
 
+use DatavisionInt\Mlipa\MlipaServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
-use DatavisionInt\Mlipa\MlipaServiceProvider;
 
 class TestCase extends Orchestra
 {
