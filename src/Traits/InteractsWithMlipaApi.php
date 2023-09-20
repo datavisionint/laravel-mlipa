@@ -17,7 +17,7 @@ trait InteractsWithMlipaApi
 
         if (config("mlipa.log_mlipa_requests")) {
             MlipaRequestLog::create([
-                'reference' => $data["reference"],
+                'reference' => $data["reference"] ?? null,
                 'url' => $url,
                 'method' => "POST",
                 'headers' => $headers,
