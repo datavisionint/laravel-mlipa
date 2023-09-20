@@ -2,6 +2,7 @@
 
 namespace DatavisionInt\Mlipa;
 
+use DatavisionInt\Mlipa\Actions\BillingCollection;
 use DatavisionInt\Mlipa\Actions\PushUssdCollection;
 use DatavisionInt\Mlipa\Lib\MlipaResponse;
 
@@ -34,6 +35,15 @@ class Mlipa
         string $currency = 'TZS'
     ) {
         $msisdn = cleanPhone($msisdn);
+        $billingCollection = new BillingCollection(
+            amount: $amount,
+            msisdn: $msisdn,
+            reference: $reference,
+            nonce: $nonce,
+            currency: $currency,
+        );
+        $response = $billingCollection->initiate();
+        return $response;
     }
 
     public function initiatePayout(
