@@ -6,5 +6,4 @@ use DatavisionInt\Mlipa\Contracts\ApiAction;
 
 class Payout implements ApiAction
 {
-
 }

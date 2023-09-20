@@ -6,5 +6,4 @@ use DatavisionInt\Mlipa\Contracts\ApiAction;
 
 class PayoutReconcilliation implements ApiAction
 {
-
 }

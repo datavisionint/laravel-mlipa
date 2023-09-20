@@ -14,7 +14,7 @@ class PushUssdCollection implements ApiAction
         public string $msisdn,
         public ?string $reference = null,
         public ?string $nonce = null,
-        public string $currency = "TZS"
+        public string $currency = 'TZS'
     ) {
     }
 
@@ -23,4 +23,3 @@ class PushUssdCollection implements ApiAction
         $this->getToken();
     }
 }
-
