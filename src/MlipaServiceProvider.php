@@ -2,9 +2,9 @@
 
 namespace DatavisionInt\Mlipa;
 
+use DatavisionInt\Mlipa\Commands\MlipaCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use DatavisionInt\Mlipa\Commands\MlipaCommand;
 
 class MlipaServiceProvider extends PackageServiceProvider
 {
