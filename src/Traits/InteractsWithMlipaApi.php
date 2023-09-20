@@ -47,7 +47,7 @@ trait InteractsWithMlipaApi
 
         $this->processErrors($jsonResponse);
 
-        return $response;
+        return $jsonResponse;
     }
 
     public function processErrors(array $data)
