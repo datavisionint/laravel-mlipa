@@ -56,11 +56,11 @@ trait InteractsWithMlipaApi
         $data = new Fluent($data);
         throw_if(
             $data->message == "Webhook URL is not set, check the webhook documentation section in the documentation for instructions, or go to configuration directly and set the webhook",
-            new WebhookUrlNotSetException($data->message)
+            new WebhookUrlNotSetException($data->message ?? "")
         );
         throw_if(
             str()->of($data->message)->startsWith("The IP"),
-            new IpAuthenticationException($data->message)
+            new IpAuthenticationException($data->message ?? "")
         );
     }
 
@@ -76,7 +76,7 @@ trait InteractsWithMlipaApi
     {
         throw_unless(
             $value = config($key, $default),
-            new MissingConfigurationException($errorMessage)
+            new MissingConfigurationException($errorMessage??"")
         );
 
         return $value;

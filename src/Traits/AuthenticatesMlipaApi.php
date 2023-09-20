@@ -38,7 +38,7 @@ trait AuthenticatesMlipaApi
 
         throw_if(
             isset($tokenResponse["error"]),
-            new AuthenticationException($tokenResponse["error_description"] ?? null)
+            new AuthenticationException($tokenResponse["error_description"] ?? "")
         );
 
         return $tokenResponse["access_token"];
