@@ -41,6 +41,6 @@ class MlipaServiceProvider extends PackageServiceProvider
             ->hasMigrations([
                 '2023_09_20_064740_create_mlipa_request_logs_table',
             ])
-            ->hasRoute("api");
+            ->hasRoute('api');
     }
 }
