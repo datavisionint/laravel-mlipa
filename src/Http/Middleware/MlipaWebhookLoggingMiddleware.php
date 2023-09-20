@@ -18,9 +18,8 @@ class MlipaWebhookLoggingMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Schema::hasTable('mlipa_webhook_logs')) {
+        if (!Schema::hasTable('mlipa_webhook_logs')) {
             throw new Exception("Base table or view not found: 1146 Table 'mlipa_webhook_logs' doesn't exist ");
-
         }
         return $next($request);
     }
