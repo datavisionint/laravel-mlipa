@@ -3,6 +3,7 @@
 namespace DatavisionInt\Mlipa\Actions;
 
 use DatavisionInt\Mlipa\Contracts\ApiAction;
+use DatavisionInt\Mlipa\Lib\MlipaResponse;
 use DatavisionInt\Mlipa\Traits\AuthenticatesMlipaApi;
 use DatavisionInt\Mlipa\Traits\InteractsWithMlipaApi;
 
@@ -22,7 +23,7 @@ class PushUssdCollection implements ApiAction
         $this->nonce = $nonce ?? generateNonce();
     }
 
-    public function initiate()
+    public function initiate(): MlipaResponse
     {
         $token = $this->getToken();
         $pushUssdEndpoint = $this->getConfigValue(
@@ -38,6 +39,7 @@ class PushUssdCollection implements ApiAction
         ];
 
         $pushUssdResponse = $this->post($pushUssdEndpoint, $body, $token);
-        dump($pushUssdResponse);
+        $mlipaResponse = MlipaResponse::fromArray($pushUssdResponse);
+        return $mlipaResponse;
     }
 }

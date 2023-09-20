@@ -3,6 +3,7 @@
 namespace DatavisionInt\Mlipa;
 
 use DatavisionInt\Mlipa\Actions\PushUssdCollection;
+use DatavisionInt\Mlipa\Lib\MlipaResponse;
 
 class Mlipa
 {
@@ -12,7 +13,7 @@ class Mlipa
         string $reference = null,
         string $nonce = null,
         string $currency = 'TZS'
-    ) {
+    ): MlipaResponse {
         $msisdn = cleanPhone($msisdn);
         $pushUssdCollection = new PushUssdCollection(
             amount: $amount,
@@ -21,7 +22,8 @@ class Mlipa
             nonce: $nonce,
             currency: $currency,
         );
-        $pushUssdCollection->initiate();
+        $response = $pushUssdCollection->initiate();
+        return $response;
     }
 
     public function initiateBilling(
