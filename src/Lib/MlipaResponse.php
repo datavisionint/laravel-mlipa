@@ -4,33 +4,20 @@ namespace DatavisionInt\Mlipa\Lib;
 
 class MlipaResponse
 {
-    public string $billing_page_url;
-
-    public string $cancel_billing_url;
-
-    public string $nonce;
-
-    public string $currency;
-
-    public string $reference;
-
-    public string $expires_at;
-
-    public string $invoice_no;
-
-    public string $msisdn;
-
-    public string $amount;
-
-    public string $status;
-
-    public string $success;
-
-    public string $message;
-
-    public string $operator_receipt;
-
-    public array $errors;
+    public ?string $billing_page_url;
+    public ?string $cancel_billing_url;
+    public ?string $nonce;
+    public ?string $currency;
+    public ?string $reference;
+    public ?string $expires_at;
+    public ?string $invoice_no;
+    public ?string $msisdn;
+    public ?string $amount;
+    public ?string $status;
+    public ?string $success;
+    public ?string $message;
+    public ?string $operator_receipt;
+    public ?array $errors;
 
     /**
      * Create instance from array
