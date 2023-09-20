@@ -2,7 +2,6 @@
 
 namespace DatavisionInt\Mlipa\Traits;
 
-use DatavisionInt\Mlipa\Exceptions\AuthenticationException;
 use DatavisionInt\Mlipa\Exceptions\IpAuthenticationException;
 use DatavisionInt\Mlipa\Exceptions\MissingConfigurationException;
 use DatavisionInt\Mlipa\Exceptions\WebhookUrlNotSetException;
