@@ -1,7 +1,7 @@
 <?php
 
-namespace DatavisionInt\Mlipa\Http\Middleware;
-;
+namespace DatavisionInt\Mlipa\Http\Middleware;;
+
 use Closure;
 use DatavisionInt\Mlipa\Models\MlipaWebhookLog;
 use Illuminate\Http\Request;
@@ -22,7 +22,7 @@ class MlipaWebhookLoggingMiddleware
     public function terminate(Request $request, Response $response)
     {
         $data = $this->log($request, $response);
-        info("Event received:", $data);
+        info("Event received:", ["data" => $data]);
     }
 
 
