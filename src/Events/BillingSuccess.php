@@ -20,7 +20,7 @@ class BillingSuccess implements MlipaWebhookEvent
     public function __construct(
         public MlipaWebhookEventData $data
     ) {
-        //
+        info("Billing success fired");
     }
 
     /**
