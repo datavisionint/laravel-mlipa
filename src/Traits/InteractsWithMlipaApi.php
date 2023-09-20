@@ -50,7 +50,7 @@ trait InteractsWithMlipaApi
 
         throw_if(
             isset($tokenResponse["error"]),
-            new AuthenticationException($tokenResponse["error_description"])
+            new AuthenticationException($tokenResponse["error_description"]??null)
         );
 
         return $tokenResponse["access_token"];
