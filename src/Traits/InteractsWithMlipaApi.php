@@ -2,6 +2,7 @@
 
 namespace DatavisionInt\Mlipa\Traits;
 
+use DatavisionInt\Mlipa\Exceptions\AuthenticationException;
 use DatavisionInt\Mlipa\Exceptions\MissingConfigurationException;
 use Illuminate\Support\Facades\Http;
 
@@ -44,9 +45,15 @@ trait InteractsWithMlipaApi
                     'client_secret' => $clientSecret,
                     'scope' => '*',
                 ]
-            );
+            )
+            ->json();
 
-        dump($tokenResponse->json()["token"]);
+        throw_if(
+            isset($tokenResponse["error"]),
+            new AuthenticationException($tokenResponse["error_description"])
+        );
+
+        return $tokenResponse["access_token"];
     }
 
     private function getConfigValue($key, $errorMessage)
