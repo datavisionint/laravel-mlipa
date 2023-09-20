@@ -3,8 +3,6 @@
 namespace DatavisionInt\Mlipa\Listeners;
 
 use DatavisionInt\Mlipa\Contracts\MlipaWebhookEvent;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 
 class LogWebhookEvent
 {
@@ -21,8 +19,8 @@ class LogWebhookEvent
      */
     public function handle(MlipaWebhookEvent $event): void
     {
-        info("Webhook event fired:", [
-            "data" => $event->getWebhookEventData()->toArray()
+        info('Webhook event fired:', [
+            'data' => $event->getWebhookEventData()->toArray(),
         ]);
     }
 }

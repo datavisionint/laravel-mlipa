@@ -8,7 +8,6 @@ trait HasMlipaWebhookEventData
 {
     /**
      * Get webhook event data
-     * @return \DatavisionInt\Mlipa\MlipaWebhookEventData
      */
     public function getWebhookEventData(): MlipaWebhookEventData
     {

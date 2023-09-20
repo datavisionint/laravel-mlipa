@@ -2,7 +2,6 @@
 
 namespace DatavisionInt\Mlipa;
 
-use DatavisionInt\Mlipa\Commands\MlipaCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -15,23 +14,23 @@ class MlipaServiceProvider extends PackageServiceProvider
      */
     protected $listen = [
         BillingFailed::class => [
-            LogWebhookEvent::class
+            LogWebhookEvent::class,
         ],
         BillingSuccess::class => [
-            LogWebhookEvent::class
+            LogWebhookEvent::class,
         ],
         PayoutFailed::class => [
-            LogWebhookEvent::class
+            LogWebhookEvent::class,
         ],
         PayoutSuccess::class => [
-            LogWebhookEvent::class
+            LogWebhookEvent::class,
         ],
         PushUssdFailed::class => [
-            LogWebhookEvent::class
+            LogWebhookEvent::class,
         ],
         PushUssdSuccess::class => [
-            LogWebhookEvent::class
-        ]
+            LogWebhookEvent::class,
+        ],
     ];
 
     public function configurePackage(Package $package): void
@@ -40,7 +39,7 @@ class MlipaServiceProvider extends PackageServiceProvider
             ->name('laravel-mlipa')
             ->hasConfigFile()
             ->hasMigrations([
-                "2023_09_20_064740_create_mlipa_request_logs_table"
+                '2023_09_20_064740_create_mlipa_request_logs_table',
             ])
             ->hasRoute("api");
     }

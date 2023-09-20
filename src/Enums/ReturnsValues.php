@@ -16,7 +16,7 @@ trait ReturnsValues
         return collect(self::cases())
             ->mapWithKeys(function (self $case) {
                 return [
-                    $case->value => str()->of($case->value)->title()
+                    $case->value => str()->of($case->value)->title(),
                 ];
             })
             ->toArray();

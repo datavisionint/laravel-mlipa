@@ -6,7 +6,7 @@ enum MlipaApiRequestLogType: string implements ShouldReturnValues
 {
     use ReturnsValues;
 
-    case API_CALL = "api_call";
-    case WEBHOOK = "webhook";
+    case API_CALL = 'api_call';
+    case WEBHOOK = 'webhook';
 
 }
