@@ -46,7 +46,7 @@ trait InteractsWithMlipaApi
                 ]
             );
 
-        dump($tokenResponse->json());
+        dump($tokenResponse->json()["token"]);
     }
 
     private function getConfigValue($key, $errorMessage)
