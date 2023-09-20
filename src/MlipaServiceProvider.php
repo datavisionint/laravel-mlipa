@@ -38,9 +38,7 @@ class MlipaServiceProvider extends PackageServiceProvider
         $package
             ->name('laravel-mlipa')
             ->hasConfigFile()
-            ->hasMigrations([
-                '2023_09_20_064740_create_mlipa_request_logs_table',
-            ])
+            ->hasMigrations()
             ->hasRoute('api');
     }
 }
