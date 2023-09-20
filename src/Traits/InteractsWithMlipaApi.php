@@ -4,8 +4,10 @@ namespace DatavisionInt\Mlipa\Traits;
 
 use DatavisionInt\Mlipa\Exceptions\AuthenticationException;
 use DatavisionInt\Mlipa\Exceptions\MissingConfigurationException;
+use DatavisionInt\Mlipa\Exceptions\WebhookUrlNotSetException;
 use DatavisionInt\Mlipa\Models\MlipaRequestLog;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Fluent;
 
 trait InteractsWithMlipaApi
 {
@@ -26,6 +28,7 @@ trait InteractsWithMlipaApi
         $response = Http::withHeaders(array_merge($headers, $defaultHeaders))
             ->withToken($token)
             ->post($rootUrl . $url, $data);
+
         $jsonResponse = $response->json();
 
         if (config("mlipa.log_mlipa_requests")) {
@@ -41,7 +44,19 @@ trait InteractsWithMlipaApi
                 'other_details' => null
             ]);
         }
+
+        $this->processErrors($jsonResponse);
+
         return $response;
+    }
+
+    public function processErrors(array $data)
+    {
+        $data = new Fluent($data);
+        throw_if(
+            $data->message == "Webhook URL is not set, check the webhook documentation section in the documentation for instructions, or go to configuration directly and set the webhook",
+            new WebhookUrlNotSetException($data->message)
+        );
     }
 
     /**
