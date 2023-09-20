@@ -3,11 +3,13 @@
 namespace DatavisionInt\Mlipa\Actions;
 
 use DatavisionInt\Mlipa\Contracts\ApiAction;
+use DatavisionInt\Mlipa\Traits\AuthenticatesMlipaApi;
 use DatavisionInt\Mlipa\Traits\InteractsWithMlipaApi;
 
 class PushUssdCollection implements ApiAction
 {
     use InteractsWithMlipaApi;
+    use AuthenticatesMlipaApi;
 
     public function __construct(
         public float $amount,
@@ -20,6 +22,6 @@ class PushUssdCollection implements ApiAction
 
     public function initiate()
     {
-        $this->getToken();
+        $token = $this->getToken();
     }
 }
