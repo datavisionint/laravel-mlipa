@@ -14,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('mlipa_request_logs', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger("application_id");
+            $table->unsignedBigInteger('application_id');
             $table->enum('type', MlipaApiRequestLogType::values())->nullable()->default(MlipaApiRequestLogType::API_CALL->value);
             $table->string('reference', 1024)->nullable();
             $table->string('url', 100)->nullable();

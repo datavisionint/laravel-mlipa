@@ -12,16 +12,14 @@ use Illuminate\Queue\SerializesModels;
 
 class PushUssdFailed implements MlipaWebhookEvent
 {
-
-    use Dispatchable, InteractsWithSockets, SerializesModels, HasMlipaWebhookEventData;
+    use Dispatchable, HasMlipaWebhookEventData, InteractsWithSockets, SerializesModels;
 
     /**
      * Create a new event instance.
      */
     public function __construct(
         public MlipaWebhookEventData $data
-    )
-    {
+    ) {
         //
     }
 

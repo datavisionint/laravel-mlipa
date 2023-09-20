@@ -10,18 +10,16 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class PushUssdSuccess  implements MlipaWebhookEvent
+class PushUssdSuccess implements MlipaWebhookEvent
 {
-
-    use Dispatchable, InteractsWithSockets, SerializesModels, HasMlipaWebhookEventData;
+    use Dispatchable, HasMlipaWebhookEventData, InteractsWithSockets, SerializesModels;
 
     /**
      * Create a new event instance.
      */
     public function __construct(
         public MlipaWebhookEventData $data
-    )
-    {
+    ) {
         //
     }
 
