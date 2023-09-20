@@ -4,7 +4,9 @@ namespace DatavisionInt\Mlipa\Http\Middleware;;
 
 use Closure;
 use DatavisionInt\Mlipa\Models\MlipaWebhookLog;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Schema;
 use Symfony\Component\HttpFoundation\Response;
 
 class MlipaWebhookLoggingMiddleware
@@ -16,6 +18,10 @@ class MlipaWebhookLoggingMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
+        if (Schema::hasTable('mlipa_webhook_logs')) {
+            throw new Exception("Base table or view not found: 1146 Table 'mlipa_webhook_logs' doesn't exist ");
+
+        }
         return $next($request);
     }
 
