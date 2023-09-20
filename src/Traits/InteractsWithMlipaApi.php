@@ -25,9 +25,9 @@ trait InteractsWithMlipaApi
             'The root URL is not set, or is improperly set, publish mlipa config then update value accordingly!'
         );
 
-        $pushUssdEndpoint = $this->getConfigValue(
-            'mlipa.endpoints.pushussd',
-            'The pushussd URL is not set, or is improperly set, publish mlipa config then update value accordingly!'
+        $authenticationEndpoint = $this->getConfigValue(
+            'mlipa.endpoints.authentication',
+            'The authentication URL is not set, or is improperly set, publish mlipa config then update value accordingly!'
         );
 
         $defaultHeaders = $this->getConfigValue(
@@ -37,7 +37,7 @@ trait InteractsWithMlipaApi
 
         $tokenResponse = Http::withHeaders($defaultHeaders)
             ->post(
-                $rootUrl.$pushUssdEndpoint,
+                $rootUrl.$authenticationEndpoint,
                 [
                     'grant_type' => 'client_credentials',
                     'client_id' => $clientKey,
@@ -46,7 +46,7 @@ trait InteractsWithMlipaApi
                 ]
             );
 
-        dump($tokenResponse);
+        dump($tokenResponse->json());
     }
 
     private function getConfigValue($key, $errorMessage)
