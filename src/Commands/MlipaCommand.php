@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace DatavisionInt\Mlipa\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class MlipaCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'laravel-mlipa';
 
     public $description = 'My command';
 
