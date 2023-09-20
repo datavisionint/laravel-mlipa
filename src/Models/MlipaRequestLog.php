@@ -21,4 +21,11 @@ class MlipaRequestLog extends Model
         'response',
         'other_details',
     ];
+
+    protected $casts = [
+        "response"=>"array",
+        "headers"=>"array",
+        "body"=>"array",
+        "other_details"=>"array",
+    ];
 }
