@@ -8,18 +8,40 @@ use Spatie\LaravelPackageTools\PackageServiceProvider;
 
 class MlipaServiceProvider extends PackageServiceProvider
 {
+    /**
+     * The event to listener mappings for the application.
+     *
+     * @var array<class-string, array<int, class-string>>
+     */
+    protected $listen = [
+        BillingFailed::class => [
+            LogWebhookEvent::class
+        ],
+        BillingSuccess::class => [
+            LogWebhookEvent::class
+        ],
+        PayoutFailed::class => [
+            LogWebhookEvent::class
+        ],
+        PayoutSuccess::class => [
+            LogWebhookEvent::class
+        ],
+        PushUssdFailed::class => [
+            LogWebhookEvent::class
+        ],
+        PushUssdSuccess::class => [
+            LogWebhookEvent::class
+        ]
+    ];
+
     public function configurePackage(Package $package): void
     {
-        /*
-         * This class is a Package Service Provider
-         *
-         * More info: https://github.com/spatie/laravel-package-tools
-         */
         $package
             ->name('laravel-mlipa')
             ->hasConfigFile()
-            ->hasViews()
-            ->hasMigration('create_laravel-mlipa_table')
-            ->hasCommand(MlipaCommand::class);
+            ->hasMigrations([
+                "2023_09_20_064740_create_mlipa_request_logs_table"
+            ])
+            ->hasRoute("api.php");
     }
 }
