@@ -18,7 +18,7 @@ if (!function_exists("generateReference")) {
 }
 
 if (!function_exists("generateNonce")) {
-    function generateNonce(): int
+    function generateNonce(): string
     {
         return str()->ulid()->toBase58();
     }
