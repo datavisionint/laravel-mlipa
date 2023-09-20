@@ -8,11 +8,17 @@ class MlipaController extends Controller
 {
     public function processWebhook(Request $request)
     {
-
+        return [
+            "success" => true,
+            "message" => "Webhook process"
+        ];
     }
 
     public function verifyPayout(Request $request)
     {
-
+        return [
+            "success" => true,
+            "message" => "Verified payout"
+        ];
     }
 }
