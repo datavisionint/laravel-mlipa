@@ -52,4 +52,34 @@ class MlipaResponse
 
         return $properties;
     }
+
+      /**
+     * Dynamically retrieve the value of an attribute.
+     *
+     * @param  TKey  $key
+     * @return TValue|null
+     */
+    public function __get($key)
+    {
+        return $this->get($key);
+    }
+
+
+    /**
+     * Get an attribute from the response instance.
+     *
+     * @template TGetDefault
+     *
+     * @param  TKey  $key
+     * @param  TGetDefault|(\Closure(): TGetDefault)  $default
+     * @return TValue|TGetDefault
+     */
+    public function get($key, $default = null)
+    {
+        if(array_key_exists($key, get_object_vars($this))) {
+            return $this->attributes[$key];
+        }
+
+        return value($default);
+    }
 }

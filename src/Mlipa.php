@@ -41,7 +41,7 @@ class Mlipa
             currency: $currency,
         );
         $response = $pushUssdCollection->initiate();
-        return $response;
+        return $this->preparedResponse($response);
     }
 
     /**
@@ -70,7 +70,7 @@ class Mlipa
             currency: $currency,
         );
         $response = $billingCollection->initiate();
-        return $response;
+        return $this->preparedResponse($response);
     }
 
     /**
@@ -102,7 +102,7 @@ class Mlipa
             name: $name
         );
         $response = $payout->initiate();
-        return $response;
+        return $this->preparedResponse($response);
     }
 
     /**
@@ -134,6 +134,6 @@ class Mlipa
             reference: $reference
         );
         $response = $payoutReconcilliation->initiate();
-        return $response;
+        return $this->preparedResponse($response);
     }
 }

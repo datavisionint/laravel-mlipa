@@ -10,7 +10,7 @@ trait PreparesResponses
      * Remove nulls from the response
      *
      * @param MlipaResponse $response
-     * @return void
+     * @return MlipaResponse
      */
     public function preparedResponse(MlipaResponse $response): MlipaResponse
     {
