@@ -2,7 +2,7 @@
 
 namespace DatavisionInt\Mlipa;
 
-use App\Providers\EventServiceProvider;
+use DatavisionInt\Mlipa\Providers\EventServiceProvider;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Providers;
+namespace DatavisionInt\Mlipa\Providers;
 
 use DatavisionInt\Mlipa\Events\BillingFailed;
 use DatavisionInt\Mlipa\Events\BillingSuccess;
