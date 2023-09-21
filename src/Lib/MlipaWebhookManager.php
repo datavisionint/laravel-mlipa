@@ -16,9 +16,6 @@ class MlipaWebhookManager
 
     public function fireEvent(array $data)
     {
-        info("Event data:", [
-            "data" => $data
-        ]);
         $mlipaWebhookEventData = MlipaWebhookEventData::fromArray($data);
         $this->dispatchEvent($mlipaWebhookEventData);
     }
