@@ -14,7 +14,7 @@ class MlipaResponse
     public ?string $msisdn;
     public ?string $amount;
     public ?string $status;
-    public ?string $success;
+    public bool $success;
     public ?string $message;
     public ?string $operator_receipt;
     public ?array $errors;
