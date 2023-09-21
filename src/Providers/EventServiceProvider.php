@@ -10,7 +10,7 @@ use DatavisionInt\Mlipa\Events\PushUssdFailed;
 use DatavisionInt\Mlipa\Events\PushUssdSuccess;
 use DatavisionInt\Mlipa\Listeners\LogWebhookEvent;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-
+use Illuminate\Support\Facades\Event;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -21,24 +21,6 @@ class EventServiceProvider extends ServiceProvider
      * @var array<class-string, array<int, class-string>>
      */
     protected $listen = [
-        BillingFailed::class => [
-            LogWebhookEvent::class,
-        ],
-        BillingSuccess::class => [
-            LogWebhookEvent::class,
-        ],
-        PayoutFailed::class => [
-            LogWebhookEvent::class,
-        ],
-        PayoutSuccess::class => [
-            LogWebhookEvent::class,
-        ],
-        PushUssdFailed::class => [
-            LogWebhookEvent::class,
-        ],
-        PushUssdSuccess::class => [
-            LogWebhookEvent::class,
-        ],
     ];
 
     /**
@@ -53,6 +35,13 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Event::listen([
+            BillingFailed::class,
+            BillingSuccess::class,
+            PushUssdFailed::class,
+            PushUssdSuccess::class,
+            PayoutSuccess::class,
+            PayoutFailed::class
+        ], LogWebhookEvent::class);
     }
 }
