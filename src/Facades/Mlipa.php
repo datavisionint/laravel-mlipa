@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Facade;
  */
 class Mlipa extends Facade
 {
-    public static $verifyPayoutCallback;
+    public static $verifyPayoutCallback = null;
 
     public static function verifyPayoutUsing($callback){
         static::$verifyPayoutCallback = $callback;
