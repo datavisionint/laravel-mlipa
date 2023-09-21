@@ -13,7 +13,6 @@ class MlipaController extends Controller
     {
         $mlipaWebhookManager = new MlipaWebhookManager;
         $mlipaWebhookManager->fireEvent($request->all());
-
         return (new WebhookResponse)->getResponse();
     }
 

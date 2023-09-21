@@ -19,14 +19,14 @@ class BillingCollection implements ApiAction
         public ?string $nonce = null,
         public string $currency = 'TZS'
     ) {
-        $this->reference = $reference ?? generateReference();
+        $this->reference = $reference ?? "BC".generateReference();
         $this->nonce = $nonce ?? generateNonce();
     }
 
     public function initiate(): MlipaResponse
     {
         $token = $this->getToken();
-        $pushUssdEndpoint = $this->getConfigValue(
+        $billingEndpoint = $this->getConfigValue(
             'mlipa.endpoints.billing',
             'The billing URL is not set, or is improperly set, publish mlipa config then update value accordingly!'
         );
@@ -38,8 +38,8 @@ class BillingCollection implements ApiAction
             'currency' => $this->currency,
         ];
 
-        $pushUssdResponse = $this->post($pushUssdEndpoint, $body, $token);
-        $mlipaResponse = MlipaResponse::fromArray($pushUssdResponse);
+        $billingResponse = $this->post($billingEndpoint, $body, $token);
+        $mlipaResponse = MlipaResponse::fromArray($billingResponse);
         return $mlipaResponse;
     }
 }

@@ -34,6 +34,13 @@ return [
     'payout_verification_route' => 'mlipa/payouts/verification',
 
     /**
+     * Payout route name
+     *
+     * The route name used for payout verification when using route() method
+     */
+    'payout_verification_route_name' => 'mlipa.payouts.verification',
+
+    /**
      * When set to false errors will be thrown when they occur and you will have to
      * handle them yourself using try catch blocks, and when set to true, the errors
      * will be silently handled and false status will be returned. The error can be found
@@ -45,14 +52,13 @@ return [
      * When set to true, the transactions will be logged to database, and you will be
      * required to create the table by running the migration
      */
-    'log_mlipa_requests' => true,
+    'log_requests' => true,
 
     /**
-     * Payout route name
-     *
-     * The route name used for payout verification when using route() method
+     * When set to true, the transactions will be logged to database, and you will be
+     * required to create the table by running the migration
      */
-    'payout_verification_route_name' => 'mlipa.payouts.verification',
+    'log_events' => true,
 
     /**
      * The root URL of the M-lipa requests

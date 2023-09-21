@@ -32,7 +32,7 @@ trait InteractsWithMlipaApi
 
         $jsonResponse = $response->json();
 
-        if (config("mlipa.log_mlipa_requests")) {
+        if (config("mlipa.log_requests")) {
             MlipaRequestLog::create([
                 'reference' => $data["reference"] ?? null,
                 'url' => $url,
