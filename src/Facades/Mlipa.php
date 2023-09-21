@@ -11,7 +11,7 @@ class Mlipa extends Facade
 {
     public static $verifyPayoutCallback;
 
-    protected static function verifyPayoutUsing($callback){
+    public static function verifyPayoutUsing($callback){
         static::$verifyPayoutCallback = $callback();
     }
 
