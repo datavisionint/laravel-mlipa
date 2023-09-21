@@ -9,6 +9,12 @@ use Illuminate\Support\Facades\Facade;
  */
 class Mlipa extends Facade
 {
+    public static $verifyPayoutCallback;
+
+    protected static function verifyPayoutUsing($callback){
+        static::$verifyPayoutCallback = $callback();
+    }
+
     protected static function getFacadeAccessor()
     {
         return \DatavisionInt\Mlipa\Mlipa::class;

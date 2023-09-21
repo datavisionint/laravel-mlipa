@@ -2,6 +2,7 @@
 
 namespace DatavisionInt\Mlipa\Http\Controllers;
 
+use DatavisionInt\Mlipa\Facades\Mlipa;
 use DatavisionInt\Mlipa\Lib\MlipaResponse;
 use DatavisionInt\Mlipa\Lib\MlipaWebhookManager;
 use DatavisionInt\Mlipa\Lib\WebhookResponse;
@@ -16,11 +17,23 @@ class MlipaController extends Controller
         return (new WebhookResponse)->getResponse();
     }
 
+
+
     public function verifyPayout(Request $request)
     {
+        if(Mlipa::$verifyPayoutCallback){
+            abort_unless(
+                call_user_func(
+                    Mlipa::$verifyPayoutCallback,
+                    [$request->reference]
+                ),
+                422,
+                "The reference provided is not valid"
+            );
+        }
         return [
             "success" => true,
-            "message" => "Verified payout"
+            "message" => "Payout verifed"
         ];
     }
 }
