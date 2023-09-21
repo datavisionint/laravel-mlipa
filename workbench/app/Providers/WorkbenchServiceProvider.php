@@ -2,6 +2,7 @@
 
 namespace Workbench\App\Providers;
 
+use DatavisionInt\Mlipa\Facades\Mlipa;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 
