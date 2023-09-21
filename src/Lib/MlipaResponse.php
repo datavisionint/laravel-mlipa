@@ -35,7 +35,7 @@ class MlipaResponse
         $mlipaResponse->msisdn = $data['msisdn'] ?? null;
         $mlipaResponse->amount = $data['amount'] ?? null;
         $mlipaResponse->status = $data['status'] ?? null;
-        $mlipaResponse->success = $data['success'] ?? null;
+        $mlipaResponse->success = $data['success'] ?? in_array($data["status"] ?? null, ["Completed"]);
         $mlipaResponse->message = $data['message'] ?? null;
         $mlipaResponse->operator_receipt = $data['operator_receipt'] ?? null;
         $mlipaResponse->errors = $data['errors'] ?? null;
