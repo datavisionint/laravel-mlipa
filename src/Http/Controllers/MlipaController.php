@@ -25,7 +25,7 @@ class MlipaController extends Controller
             abort_unless(
                 call_user_func(
                     Mlipa::$verifyPayoutCallback,
-                    [$request->reference]
+                    $request->reference
                 ),
                 422,
                 "The reference provided is not valid"
