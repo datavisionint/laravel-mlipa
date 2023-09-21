@@ -20,8 +20,7 @@ class EventServiceProvider extends ServiceProvider
      *
      * @var array<class-string, array<int, class-string>>
      */
-    protected $listen = [
-    ];
+    protected $listen = [];
 
     /**
      * Register services.
@@ -42,6 +41,6 @@ class EventServiceProvider extends ServiceProvider
             PushUssdSuccess::class,
             PayoutSuccess::class,
             PayoutFailed::class
-        ], LogWebhookEvent::class);
+        ], [LogWebhookEvent::class, "handle"]);
     }
 }
