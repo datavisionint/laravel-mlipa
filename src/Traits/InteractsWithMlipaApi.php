@@ -4,8 +4,12 @@ namespace DatavisionInt\Mlipa\Traits;
 
 use DatavisionInt\Mlipa\Exceptions\IpAuthenticationException;
 use DatavisionInt\Mlipa\Exceptions\MissingConfigurationException;
+use DatavisionInt\Mlipa\Exceptions\MlipaApiException;
+use DatavisionInt\Mlipa\Exceptions\MlipaApiValidationException;
+use DatavisionInt\Mlipa\Exceptions\VerificationUrlNotSetException;
 use DatavisionInt\Mlipa\Exceptions\WebhookUrlNotSetException;
 use DatavisionInt\Mlipa\Models\MlipaRequestLog;
+use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Fluent;
 
@@ -46,12 +50,12 @@ trait InteractsWithMlipaApi
             ]);
         }
 
-        $this->processErrors($jsonResponse);
+        $this->processErrors($jsonResponse, $response);
 
         return $jsonResponse;
     }
 
-    public function processErrors(array $data)
+    public function processErrors(array $data, Response $response)
     {
         $data = new Fluent($data);
         throw_if(
@@ -59,8 +63,16 @@ trait InteractsWithMlipaApi
             new WebhookUrlNotSetException($data->message ?? "")
         );
         throw_if(
+            $data->message == "Verification URL is not set, go to configurations in developer portal and set a valid verification URL for payout verification!",
+            new VerificationUrlNotSetException($data->message ?? "")
+        );
+        throw_if(
             str()->of($data->message)->startsWith("The IP"),
             new IpAuthenticationException($data->message ?? "")
+        );
+        throw_if(
+            $response->status() == "422",
+            new MlipaApiValidationException($data->message)
         );
     }
 
@@ -76,7 +88,7 @@ trait InteractsWithMlipaApi
     {
         throw_unless(
             $value = config($key, $default),
-            new MissingConfigurationException($errorMessage??"")
+            new MissingConfigurationException($errorMessage ?? "")
         );
 
         return $value;
