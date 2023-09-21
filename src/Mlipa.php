@@ -8,9 +8,13 @@ use DatavisionInt\Mlipa\Actions\Payout;
 use DatavisionInt\Mlipa\Actions\PayoutReconcilliation;
 use DatavisionInt\Mlipa\Actions\PushUssdCollection;
 use DatavisionInt\Mlipa\Lib\MlipaResponse;
+use DatavisionInt\Mlipa\Traits\PreparesResponses;
 
 class Mlipa
 {
+    use PreparesResponses;
+
+
     /**
      * Initiate push usd transaction
      *
@@ -114,8 +118,7 @@ class Mlipa
             reference: $reference
         );
         $response = $collectionReconcilliation->initiate();
-        return $response;
-
+        return $this->preparedResponse($response);
     }
 
     /**
