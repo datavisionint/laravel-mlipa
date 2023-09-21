@@ -2,36 +2,17 @@
 
 namespace DatavisionInt\Mlipa;
 
+use App\Providers\EventServiceProvider;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
 class MlipaServiceProvider extends PackageServiceProvider
 {
-    /**
-     * The event to listener mappings for the application.
-     *
-     * @var array<class-string, array<int, class-string>>
-     */
-    protected $listen = [
-        BillingFailed::class => [
-            LogWebhookEvent::class,
-        ],
-        BillingSuccess::class => [
-            LogWebhookEvent::class,
-        ],
-        PayoutFailed::class => [
-            LogWebhookEvent::class,
-        ],
-        PayoutSuccess::class => [
-            LogWebhookEvent::class,
-        ],
-        PushUssdFailed::class => [
-            LogWebhookEvent::class,
-        ],
-        PushUssdSuccess::class => [
-            LogWebhookEvent::class,
-        ],
-    ];
+
+    public function registeringPackage()
+    {
+        $this->app->register(EventServiceProvider::class);
+    }
 
     public function configurePackage(Package $package): void
     {
