@@ -26,10 +26,10 @@ class MlipaWebhookManager
             "billing_success" => BillingSuccess::dispatch($mlipaWebhookEventData),
             "billing_failed" => BillingFailed::dispatch($mlipaWebhookEventData),
             "payout_success" => PayoutSuccess::dispatch($mlipaWebhookEventData),
-            "payout_success" => PayoutFailed::dispatch($mlipaWebhookEventData),
+            "payout_failed" => PayoutFailed::dispatch($mlipaWebhookEventData),
             "pushussd_success" => PushUssdSuccess::dispatch($mlipaWebhookEventData),
             "pushussd_failed" => PushUssdFailed::dispatch($mlipaWebhookEventData),
-            null => null
+            default => null
         };
     }
 }
