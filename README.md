@@ -22,6 +22,10 @@ php artisan vendor:publish --tag="mlipa-config"
 This is the contents of the published config file:
 
 ```php
+
+use DatavisionInt\Mlipa\Models\MlipaCollection;
+use DatavisionInt\Mlipa\Models\MlipaPayout;
+
 return [
 
     /**
@@ -68,7 +72,7 @@ return [
      * will be silently handled and false status will be returned. The error can be found
      * in the logs.
      */
-    'handle_errors' => false,
+    'handle_errors' => true,
 
     /**
      * When set to true, the transactions will be logged to database, and you will be
@@ -81,6 +85,18 @@ return [
      * required to create the table by running the migration
      */
     'log_events' => true,
+
+    /**
+     * The model to be used for payouts, incase you wish to change the model usde or database
+     * table name, extend this model and then change the $table property.
+     */
+    'payout_model' => MlipaPayout::class,
+
+    /**
+     * The model to be used for collections. Incase you wish to change the model used
+     * or database table name, extend this model and then change $table property
+     */
+    'collection_model' => MlipaCollection::class,
 
     /**
      * The root URL of the M-lipa requests
@@ -150,6 +166,7 @@ return [
         'Content-Type' => 'application/json',
     ],
 ];
+
 
 ```
 

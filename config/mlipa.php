@@ -49,7 +49,7 @@ return [
      * will be silently handled and false status will be returned. The error can be found
      * in the logs.
      */
-    'handle_errors' => false,
+    'handle_errors' => true,
 
     /**
      * When set to true, the transactions will be logged to database, and you will be

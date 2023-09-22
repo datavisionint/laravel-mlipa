@@ -17,6 +17,27 @@ trait InteractsWithMlipaApi
 {
     private function post($url, $data, $token = null, $headers = [])
     {
+        $response = null;
+        try {
+            $this->sendRequest(
+                $url,
+                $data,
+                $token,
+                $headers,
+                $response
+            );
+            return $response;
+        } catch (\Throwable $th) {
+            throw_unless(
+                config("mlipa.handle_errors"),
+                $th
+            );
+            return $response;
+        }
+    }
+
+    public function sendRequest($url, $data, $token = null, $headers = [], &$_jsonResponse)
+    {
 
         $defaultHeaders = $this->getConfigValue(
             'mlipa.default_headers',
@@ -35,6 +56,7 @@ trait InteractsWithMlipaApi
             ->post($url, $data);
 
         $jsonResponse = $response->json();
+        $_jsonResponse = $jsonResponse;
 
         if (config("mlipa.log_requests")) {
             MlipaRequestLog::create([
@@ -71,8 +93,8 @@ trait InteractsWithMlipaApi
             new IpAuthenticationException($data->message ?? "")
         );
         throw_if(
-            $response->status() == "422",
-            new MlipaApiValidationException($data->message)
+            $response->status() == "422" || $data->message == "Validation failed",
+            new MlipaApiValidationException($data->message.":".json_encode($data->errors))
         );
     }
 
