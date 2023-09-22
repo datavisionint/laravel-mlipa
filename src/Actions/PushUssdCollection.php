@@ -40,6 +40,11 @@ class PushUssdCollection implements ApiAction
 
         $pushUssdResponse = $this->post($pushUssdEndpoint, $body, $token);
         $mlipaResponse = MlipaResponse::fromArray($pushUssdResponse);
+
+
+        if ($mlipaResponse->success && config("mlipa.collection_model")) {
+            return config("mlipa.collection_model")::create($mlipaResponse->toArray());
+        }
         return $mlipaResponse;
     }
 }

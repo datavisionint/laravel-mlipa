@@ -40,6 +40,10 @@ class BillingCollection implements ApiAction
 
         $billingResponse = $this->post($billingEndpoint, $body, $token);
         $mlipaResponse = MlipaResponse::fromArray($billingResponse);
+
+        if ($mlipaResponse->success && config("mlipa.collection_model")) {
+            return config("mlipa.collection_model")::create($mlipaResponse->toArray());
+        }
         return $mlipaResponse;
     }
 }

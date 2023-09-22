@@ -20,7 +20,7 @@ class Payout implements ApiAction
         public ?string $nonce = null,
         public string $currency = 'TZS'
     ) {
-        $this->reference = $reference ?? "PY".generateReference();
+        $this->reference = $reference ?? "PY" . generateReference();
         $this->nonce = $nonce ?? generateNonce();
     }
 
@@ -42,6 +42,10 @@ class Payout implements ApiAction
 
         $payoutResponse = $this->post($payoutEndpoint, $body, $token);
         $mlipaResponse = MlipaResponse::fromArray($payoutResponse);
+
+        if ($mlipaResponse->success && config("mlipa.payout_model")) {
+            return config("mlipa.payout_model")::create($mlipaResponse->toArray());
+        }
         return $mlipaResponse;
     }
 }

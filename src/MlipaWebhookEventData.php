@@ -42,4 +42,15 @@ class MlipaWebhookEventData
 
         return $properties;
     }
+
+    public function toNulllessArray(): array
+    {
+        $properties = get_object_vars($this);
+        foreach ($properties as $property => $value) {
+            if ($value == null) {
+                unset($poperties[$property]);
+            }
+        }
+        return $properties;
+    }
 }

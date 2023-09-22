@@ -9,27 +9,58 @@ use DatavisionInt\Mlipa\Events\PayoutSuccess;
 use DatavisionInt\Mlipa\Events\PushUssdFailed;
 use DatavisionInt\Mlipa\Events\PushUssdSuccess;
 use DatavisionInt\Mlipa\MlipaWebhookEventData;
-use Illuminate\Support\Fluent;
 
 class MlipaWebhookManager
 {
+    public MlipaWebhookEventData $mlipaWebhookEventData;
 
-    public function fireEvent(array $data)
+    public function processWebhook(array $data)
     {
-        $mlipaWebhookEventData = MlipaWebhookEventData::fromArray($data);
-        $this->dispatchEvent($mlipaWebhookEventData);
-    }
-
-    private function dispatchEvent(MlipaWebhookEventData $mlipaWebhookEventData)
-    {
-        match ($mlipaWebhookEventData->event) {
-            "billing_success" => BillingSuccess::dispatch($mlipaWebhookEventData),
-            "billing_failed" => BillingFailed::dispatch($mlipaWebhookEventData),
-            "payout_success" => PayoutSuccess::dispatch($mlipaWebhookEventData),
-            "payout_failed" => PayoutFailed::dispatch($mlipaWebhookEventData),
-            "pushussd_success" => PushUssdSuccess::dispatch($mlipaWebhookEventData),
-            "pushussd_failed" => PushUssdFailed::dispatch($mlipaWebhookEventData),
+        $this->mlipaWebhookEventData = MlipaWebhookEventData::fromArray($data);
+        match ($this->mlipaWebhookEventData->event) {
+            "billing_success" => $this->updateTransaction(
+                "collection",
+                BillingSuccess::class
+            ),
+            "billing_failed" => $this->updateTransaction(
+                "collection",
+                BillingFailed::class
+            ),
+            "payout_success" => $this->updateTransaction(
+                "payout",
+                PayoutSuccess::class
+            ),
+            "payout_failed" => $this->updateTransaction(
+                "payout",
+                PayoutFailed::class
+            ),
+            "pushussd_success" => $this->updateTransaction(
+                "collection",
+                PushUssdSuccess::class
+            ),
+            "pushussd_failed" => $this->updateTransaction(
+                "collection",
+                PushUssdFailed::class
+            ),
             default => null
         };
+    }
+
+    public function updateTransaction(string $type, string $event)
+    {
+        if(config("mlipa.{$type}_model")){
+            $transactionData = $this->mlipaWebhookEventData->toNulllessArray();
+            $transactionData["comment"] = $transaction["error_message"] ?? "";
+
+            $transaction = config("mlipa.{$type}_model")::whereReference($this->mlipaWebhookEventData->reference)
+                ->first();
+
+            if ($transaction) {
+                $transaction->update($transactionData);
+                $event::dispatch($this->mlipaWebhookEventData, $transaction);
+            }
+        }else{
+            $event::dispatch($this->mlipaWebhookEventData);
+        }
     }
 }

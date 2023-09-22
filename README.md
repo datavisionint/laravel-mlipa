@@ -211,12 +211,13 @@ $response = Mlipa::reconcilePayout(
 ```
 
 ### Custom verification flow
-By default verification will turn true. In order to customise in you service provider's boot method implement a callback that returns true. Otherwise, whether nothing is returned or falsy values, the verification will fail:
+By default verification will turn true. In order to customise in you service provider's boot method implement a callback that returns true. Otherwise, whether nothing is returned or falsy values, the verification will fail.
+If you have disabled payout models, then $isTransactionValid will be true by default, if the model is defined, then the reference will be checked against the payout, if it exists, then $isTransactionValid will be true, if doesn't $isTransactionValid will be false.
 
 ```php
-Mlipa::verifyPayoutUsing(function(string $reference): bool{
+Mlipa::verifyPayoutUsing(function(string $reference, bool $isTransactionValid): bool{
      // some code to verify the transaction
-     return false;
+     return $isTransactionValid;
 });
 ```
 
@@ -245,3 +246,78 @@ protected $listen = [
    ]
 ];
 ```
+
+<table>
+  <tr>
+    <th>Event</th>
+    <th>Property</th>
+    <th>Type</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td rowspan="2">BillingFailed</td>
+    <td>$data</td>
+    <td>DatavisionInt\Mlipa\MlipaWebhookEventData</td>
+    <td>An object containing webhook data as in the documentation</td>
+  </tr>
+  <tr>
+    <td>$collection</td>
+    <td>DatavisionInt\Mlipa\Models\MlipaCollection|null|{The model you define in config}</td>
+    <td>The collection model instance, will be null if set to null in config, or the model that you define in the config</td>
+  </tr>
+  <tr>
+    <td rowspan="2">BillingSuccess</td>
+    <td>$data</td>
+    <td>DatavisionInt\Mlipa\MlipaWebhookEventData</td>
+    <td>An object containing webhook data as in the documentation</td>
+  </tr>
+  <tr>
+    <td>$collection</td>
+    <td>DatavisionInt\Mlipa\Models\MlipaCollection|null|{The model you define in config}</td>
+    <td>The collection model instance, will be null if set to null in config, or the model that you define in the config</td>
+  </tr>
+  <tr>
+    <td rowspan="2">PushUssdFailed</td>
+    <td>$data</td>
+    <td>DatavisionInt\Mlipa\MlipaWebhookEventData</td>
+    <td>An object containing webhook data as in the documentation</td>
+  </tr>
+  <tr>
+    <td>$collection</td>
+    <td>DatavisionInt\Mlipa\Models\MlipaCollection|null|{The model you define in config}</td>
+    <td>The collection model instance, will be null if set to null in config, or the model that you define in the config</td>
+  </tr>
+  <tr>
+    <td rowspan="2">PushUssdSuccess</td>
+    <td>$data</td>
+    <td>DatavisionInt\Mlipa\MlipaWebhookEventData</td>
+    <td>An object containing webhook data as in the documentation</td>
+  </tr>
+  <tr>
+    <td>$collection</td>
+    <td>DatavisionInt\Mlipa\Models\MlipaCollection|null|{The model you define in config}</td>
+    <td>The collection model instance, will be null if set to null in config, or the model that you define in the config</td>
+  </tr>
+  <tr>
+    <td rowspan="2">PayoutSuccess</td>
+    <td>$data</td>
+    <td>DatavisionInt\Mlipa\MlipaWebhookEventData</td>
+    <td>An object containing webhook data as in the documentation</td>
+  </tr>
+  <tr>
+    <td>$payout</td>
+    <td>DatavisionInt\Mlipa\Models\MlipaPayout|null|{The model you define in config}</td>
+    <td>The payout model instance, will be null if set to null in config, or the model that you define in the config</td>
+  </tr>
+  <tr>
+    <td rowspan="2">PayoutFailed</td>
+    <td>$data</td>
+    <td>DatavisionInt\Mlipa\MlipaWebhookEventData</td>
+    <td>An object containing webhook data as in the documentation</td>
+  </tr>
+  <tr>
+    <td>$payout</td>
+    <td>DatavisionInt\Mlipa\Models\MlipaPayout|null|{The model you define in config}</td>
+    <td>The payout model instance, will be null if set to null in config, or the model that you define in the config</td>
+  </tr>
+</table>

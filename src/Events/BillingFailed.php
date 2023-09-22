@@ -18,7 +18,8 @@ class BillingFailed implements MlipaWebhookEvent
      * Create a new event instance.
      */
     public function __construct(
-        public MlipaWebhookEventData $data
+        public MlipaWebhookEventData $data,
+        public mixed $collection = null
     ) {
         //
     }
