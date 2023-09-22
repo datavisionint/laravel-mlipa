@@ -153,12 +153,6 @@ return [
 
 ```
 
-Optionally, you can publish the views using
-
-```bash
-php artisan vendor:publish --tag=":package_slug-views"
-```
-
 ## Authentication
 
 The package uses Oauth2, go to <a href="https://developer.mlipa.co.tz/">M-Lipa Dashboard</a>, then generate client secret and client key. Then update the variables in your .env file accordingly.
@@ -251,30 +245,3 @@ protected $listen = [
    ]
 ];
 ```
-
-## Testing
-
-```bash
-composer test
-```
-
-## Changelog
-
-Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
-
-## Contributing
-
-Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
-
-## Security Vulnerabilities
-
-Please review [our security policy](../../security/policy) on how to report security vulnerabilities.
-
-## Credits
-
--   [:author_name](https://github.com/:author_username)
--   [All Contributors](../../contributors)
-
-## License
-
-The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
