@@ -20,46 +20,52 @@ class MlipaWebhookManager
         match ($this->mlipaWebhookEventData->event) {
             "billing_success" => $this->updateTransaction(
                 "collection",
-                BillingSuccess::class
+                BillingSuccess::class,
+                "Completed"
             ),
             "billing_failed" => $this->updateTransaction(
                 "collection",
-                BillingFailed::class
+                BillingFailed::class,
+                "failed"
             ),
             "payout_success" => $this->updateTransaction(
                 "payout",
-                PayoutSuccess::class
+                PayoutSuccess::class,
+                "Completed"
             ),
             "payout_failed" => $this->updateTransaction(
                 "payout",
-                PayoutFailed::class
+                PayoutFailed::class,
+                "failed"
             ),
             "pushussd_success" => $this->updateTransaction(
                 "collection",
-                PushUssdSuccess::class
+                PushUssdSuccess::class,
+                "Completed"
             ),
             "pushussd_failed" => $this->updateTransaction(
                 "collection",
-                PushUssdFailed::class
+                PushUssdFailed::class,
+                "failed"
             ),
             default => null
         };
     }
 
-    public function updateTransaction(string $type, string $event)
+    public function updateTransaction(string $type, string $event, string $status)
     {
-        if(config("mlipa.{$type}_model")){
+        if (config("mlipa.{$type}_model")) {
             $transactionData = $this->mlipaWebhookEventData->toNulllessArray();
-            $transactionData["comment"] = $transaction["error_message"] ?? "";
+            $transactionData["comment"] = $this->mlipaWebhookEventData->error_message;
+            $transactionData["status"] = $status;
 
             $transaction = config("mlipa.{$type}_model")::whereReference($this->mlipaWebhookEventData->reference)
                 ->first();
-
             if ($transaction) {
                 $transaction->update($transactionData);
                 $event::dispatch($this->mlipaWebhookEventData, $transaction);
             }
-        }else{
+        } else {
             $event::dispatch($this->mlipaWebhookEventData);
         }
     }

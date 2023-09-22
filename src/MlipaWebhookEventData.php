@@ -48,7 +48,7 @@ class MlipaWebhookEventData
         $properties = get_object_vars($this);
         foreach ($properties as $property => $value) {
             if ($value == null) {
-                unset($poperties[$property]);
+                unset($properties[$property]);
             }
         }
         return $properties;

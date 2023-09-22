@@ -44,7 +44,7 @@ class Payout implements ApiAction
         $mlipaResponse = MlipaResponse::fromArray($payoutResponse);
 
         if ($mlipaResponse->success && config("mlipa.payout_model")) {
-            return config("mlipa.payout_model")::create($mlipaResponse->toArray());
+            return config("mlipa.payout_model")::create($body);
         }
         return $mlipaResponse->toNulllessResponse();
     }
