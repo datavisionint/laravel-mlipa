@@ -23,7 +23,7 @@ class PushUssdCollection implements ApiAction
         $this->nonce = $nonce ?? generateNonce();
     }
 
-    public function initiate(): MlipaResponse
+    public function initiate(): mixed
     {
         $token = $this->getToken();
         $pushUssdEndpoint = $this->getConfigValue(
@@ -45,6 +45,6 @@ class PushUssdCollection implements ApiAction
         if ($mlipaResponse->success && config("mlipa.collection_model")) {
             return config("mlipa.collection_model")::create($mlipaResponse->toArray());
         }
-        return $mlipaResponse;
+        return $mlipaResponse->toNulllessResponse();
     }
 }

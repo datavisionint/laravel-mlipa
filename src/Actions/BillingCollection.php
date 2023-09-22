@@ -23,7 +23,7 @@ class BillingCollection implements ApiAction
         $this->nonce = $nonce ?? generateNonce();
     }
 
-    public function initiate(): MlipaResponse
+    public function initiate(): mixed
     {
         $token = $this->getToken();
         $billingEndpoint = $this->getConfigValue(
@@ -44,6 +44,6 @@ class BillingCollection implements ApiAction
         if ($mlipaResponse->success && config("mlipa.collection_model")) {
             return config("mlipa.collection_model")::create($mlipaResponse->toArray());
         }
-        return $mlipaResponse;
+        return $mlipaResponse->toNulllessResponse();
     }
 }

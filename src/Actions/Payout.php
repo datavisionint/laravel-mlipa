@@ -24,7 +24,7 @@ class Payout implements ApiAction
         $this->nonce = $nonce ?? generateNonce();
     }
 
-    public function initiate(): MlipaResponse
+    public function initiate(): mixed
     {
         $token = $this->getToken();
         $payoutEndpoint = $this->getConfigValue(
@@ -46,6 +46,6 @@ class Payout implements ApiAction
         if ($mlipaResponse->success && config("mlipa.payout_model")) {
             return config("mlipa.payout_model")::create($mlipaResponse->toArray());
         }
-        return $mlipaResponse;
+        return $mlipaResponse->toNulllessResponse();
     }
 }

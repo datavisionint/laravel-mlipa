@@ -7,14 +7,8 @@ use DatavisionInt\Mlipa\Actions\CollectionReconcilliation;
 use DatavisionInt\Mlipa\Actions\Payout;
 use DatavisionInt\Mlipa\Actions\PayoutReconcilliation;
 use DatavisionInt\Mlipa\Actions\PushUssdCollection;
-use DatavisionInt\Mlipa\Lib\MlipaResponse;
-use DatavisionInt\Mlipa\Traits\PreparesResponses;
-
 class Mlipa
 {
-    use PreparesResponses;
-
-
     /**
      * Initiate push usd transaction
      *
@@ -23,7 +17,7 @@ class Mlipa
      * @param string|null $reference
      * @param string|null $nonce
      * @param string $currency
-     * @return MlipaResponse
+     * @return mixed
      */
     public function initiatePushUssd(
         float $amount,
@@ -31,7 +25,7 @@ class Mlipa
         ?string $reference = null,
         string $nonce = null,
         string $currency = 'TZS'
-    ): MlipaResponse {
+    ): mixed {
         $msisdn = cleanPhone($msisdn);
         $pushUssdCollection = new PushUssdCollection(
             amount: $amount,
@@ -41,7 +35,7 @@ class Mlipa
             currency: $currency,
         );
         $response = $pushUssdCollection->initiate();
-        return $this->preparedResponse($response);
+        return $response;
     }
 
     /**
@@ -52,7 +46,7 @@ class Mlipa
      * @param string|null $reference
      * @param string|null $nonce
      * @param string $currency
-     * @return MlipaResponse
+     * @return mixed
      */
     public function initiateBilling(
         float $amount,
@@ -60,7 +54,7 @@ class Mlipa
         ?string $reference = null,
         string $nonce = null,
         string $currency = 'TZS'
-    ): MlipaResponse {
+    ): mixed {
         $msisdn = cleanPhone($msisdn);
         $billingCollection = new BillingCollection(
             amount: $amount,
@@ -70,7 +64,7 @@ class Mlipa
             currency: $currency,
         );
         $response = $billingCollection->initiate();
-        return $this->preparedResponse($response);
+        return $response;
     }
 
     /**
@@ -82,7 +76,7 @@ class Mlipa
      * @param string|null $reference
      * @param string|null $nonce
      * @param string $currency
-     * @return MlipaResponse
+     * @return mixed
      */
     public function initiatePayout(
         float $amount,
@@ -91,7 +85,7 @@ class Mlipa
         string $reference = null,
         string $nonce = null,
         string $currency = 'TZS'
-    ): MlipaResponse {
+    ): mixed {
         $msisdn = cleanPhone($msisdn);
         $payout = new Payout(
             amount: $amount,
@@ -102,38 +96,38 @@ class Mlipa
             name: $name
         );
         $response = $payout->initiate();
-        return $this->preparedResponse($response);
+        return $response;
     }
 
     /**
      * Reconcile collection transaction
      *
      * @param string|null $reference
-     * @return MlipaResponse
+     * @return mixed
      */
     public function reconcileCollection(
         string $reference = null
-    ): MlipaResponse {
+    ): mixed {
         $collectionReconcilliation = new CollectionReconcilliation(
             reference: $reference
         );
         $response = $collectionReconcilliation->initiate();
-        return $this->preparedResponse($response);
+        return $response;
     }
 
     /**
      * Reconcile payout transaction
      *
      * @param string|null $reference
-     * @return MlipaResponse
+     * @return mixed
      */
     public function reconcilePayout(
         string $reference = null
-    ): MlipaResponse {
+    ): mixed {
         $payoutReconcilliation = new PayoutReconcilliation(
             reference: $reference
         );
         $response = $payoutReconcilliation->initiate();
-        return $this->preparedResponse($response);
+        return $response;
     }
 }

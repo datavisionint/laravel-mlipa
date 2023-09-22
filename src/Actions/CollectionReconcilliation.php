@@ -29,6 +29,6 @@ class CollectionReconcilliation implements ApiAction
 
         $response = $this->post($endpoint, $body, $token);
         $mlipaResponse = MlipaResponse::fromArray($response);
-        return $mlipaResponse;
+        return $mlipaResponse->toNulllessResponse();
     }
 }

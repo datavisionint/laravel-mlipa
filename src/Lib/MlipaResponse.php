@@ -2,8 +2,12 @@
 
 namespace DatavisionInt\Mlipa\Lib;
 
+use DatavisionInt\Mlipa\Traits\PreparesResponses;
+
 class MlipaResponse
 {
+    use PreparesResponses;
+
     public ?string $billing_page_url;
     public ?string $cancel_billing_url;
     public ?string $nonce;
@@ -51,6 +55,14 @@ class MlipaResponse
         $properties = get_object_vars($this);
 
         return $properties;
+    }
+
+    /**
+     * Return the object without null values
+     */
+    public function toNulllessResponse(): MlipaResponse
+    {
+        return $this->preparedResponse($this);
     }
 
       /**
