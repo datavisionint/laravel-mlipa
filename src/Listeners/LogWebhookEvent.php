@@ -22,7 +22,6 @@ class LogWebhookEvent
     public function handle(MlipaWebhookEvent $event): void
     {
         if (config("mlipa.log_events")) {
-            info(get_class($event));
             $request = request();
 
             $data = [
