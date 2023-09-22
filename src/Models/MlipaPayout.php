@@ -22,6 +22,46 @@ class MlipaPayout extends Model
         "comment",
     ];
 
+    /**
+     * Is the payout successful
+     *
+     * @return boolean
+     */
+    public function isSuccessful()
+    {
+        return $this->status == PayoutStatus::SUCCESSFUL->value;
+    }
+
+    /**
+     * Is the payout awaiting verification
+     *
+     * @return boolean
+     */
+    public function isAwaitingVerification()
+    {
+        return $this->status == PayoutStatus::AWAITING_VERIFICATION->value;
+    }
+
+    /**
+     * Is the payout pending
+     *
+     * @return boolean
+     */
+    public function isPending()
+    {
+        return $this->status == PayoutStatus::PENDING->value;
+    }
+
+    /**
+     * Is the payout failed
+     *
+     * @return boolean
+     */
+    public function hasFailed()
+    {
+        return $this->status == PayoutStatus::FAILED->value;
+    }
+
 
     /**
      * Get the mlipaApiLog associated with the Collection

@@ -26,6 +26,36 @@ class MlipaCollection extends Model
     ];
 
     /**
+     * Check if transction is succesful
+     *
+     * @return boolean
+     */
+    public function isSuccessful()
+    {
+        return $this->status == CollectionStatus::SUCCESSFUL->value;
+    }
+
+    /**
+     * Check if transction is pending
+     *
+     * @return boolean
+     */
+    public function isPending()
+    {
+        return $this->status == CollectionStatus::PENDING->value;
+    }
+
+    /**
+     * Check if transction is failed
+     *
+     * @return boolean
+     */
+    public function hasFailed()
+    {
+        return $this->status == CollectionStatus::FAILED->value;
+    }
+
+    /**
      * Get the mlipaApiLog associated with the Collection
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
