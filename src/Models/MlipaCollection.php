@@ -2,6 +2,7 @@
 
 namespace DatavisionInt\Mlipa\Models;
 
+use DatavisionInt\Mlipa\Enums\CollectionStatus;
 use DatavisionInt\Mlipa\Models\MlipaRequestLog;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -29,8 +30,24 @@ class MlipaCollection extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function mlipaRequestLog(): HasOne
+    public function requestLog(): HasOne
     {
         return $this->hasOne(MlipaRequestLog::class, 'reference', 'reference');
+    }
+
+    /**
+     * Map api status to database
+     *
+     * @param mixed $value
+     * @return string|null
+     */
+    public function setStatusAttribute($value)
+    {
+        $this->attributes["status"] = match ($value) {
+            "Created" => CollectionStatus::PENDING->value,
+            "Completed" => CollectionStatus::SUCCESSFUL->value,
+            "failed" => CollectionStatus::FAILED->value,
+            default => null
+        };
     }
 }

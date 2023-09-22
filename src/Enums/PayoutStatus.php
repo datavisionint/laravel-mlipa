@@ -10,5 +10,5 @@ enum PayoutStatus:string implements ShouldReturnValues
     case VERIFICATION_FAILED = "verification_failed";
     case PENDING = "pending";
     case SUCCESSFUL = "successful";
-    case PAYOUT_FAILED = "failed";
+    case FAILED = "failed";
 }
